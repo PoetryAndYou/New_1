@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.app02.dao.UserMapper">
+    <select id="findAll" resultType="com.briup.apps.app02.bean.User">
+    select * from sms_user
+  </select>
+    <select id="selectByPrimaryKey" resultType="com.briup.apps.app02.bean.User">
+    select * from sms_user where id=#{id}
+    </select>
+    <select id="selectByType" resultType="com.briup.apps.app02.bean.User" parameterType="String">
+    select * from sms_user where type=#{type}
+    </select>
+    <delete id="delectUser">
+        delete from sms_user where id=#{id}
+
+    </delete>
+    <insert id="insert">
+      insert into sms_user (
+      id,realname,telephone,password,gender,type,status)
+      values (#{id},#{realname},#{telephone},#{password},#{gender},#{type},#{status})
+    </insert>
+    <update id="update">
+        update sms_user
+        <set>
+            <if test="realname != null">realname=#{realname},</if>
+            <if test="telephone != null">telephone=#{telephone},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="gender != null">gender=#{gender}</if>
+            <if test="type != null">type=#{type}</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="query" resultType="com.briup.apps.app02.bean.User">
+            SELECT * FROM sms_user
+            <where>
+                <if test="id != null">
+                    is = #{test}
+                </if>
+                <if test="realname != null">
+                    AND realname like concat(concat('%',#{realname}),'%')
+                </if>
+                <if test="telephone != null ">
+                    AND telephone like concat(concat('%',#{telephone}),'%')
+                </if>
+                <if test="password != null">
+                    AND password like concat(concat('%',#{password}),'%')
+                </if>
+                <if test="gender != null">
+                    AND gender like concat(concat('%',#{gender}),'%')
+                </if>
+                <if test="type != null" >
+                    AND type like concat(concat('%',#{type}),'%')
+                </if>
+                <if test="status != null" >
+                    AND status like concat(concat('%',#{status}),'%')
+                </if>
+            </where>
+        </select>
+</mapper>

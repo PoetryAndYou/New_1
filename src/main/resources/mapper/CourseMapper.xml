@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.app02.dao.CourseMapper">
+    <select id="findALL" resultType="com.briup.apps.app02.bean.Course">
+    select * from sms_course
+</select>
+    <select id="findById" resultType="com.briup.apps.app02.bean.Course">
+        select * from sms_course where id=#{id}
+    </select>
+    <delete id="delect">
+        delete from sms_course where id=#{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true"
+            keyProperty="id">
+  insert into sms_course (name,description,credit,teacher_id)
+  values (#{name},#{description},#{credit},#{teacher_id})
+    </insert>
+    <update id="update">
+        update sms_course
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="credit != null">credit=#{credit}</if>
+            <if test="teacher_id != null">teacher_id=#{teacher_id}</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
